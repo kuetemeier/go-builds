@@ -2,13 +2,13 @@
 package main
 
 var version = "unknown"
-var commitHash = "unknown"
-var gitTag = "unknown"
+var commithash = "unknown"
+var buildtime = "unknown"
 
 func main() {
 	println("Ba dum, tss!")
 	println("")
 	println("This is version: " + version)
-	println("Commit Hash: " + commitHash)
-	println("Git Tag: " + gitTag)
+	println("Commit Hash: " + commithash)
+	println("Timestamp:" + buildtime)
 }
