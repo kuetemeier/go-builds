@@ -27,9 +27,6 @@ build:
       goarm: 6
   env:
     - CGO_ENABLED=0
-builds:
-- env:
-  - CGO_ENABLED=0
 archive:
   name_template: "{{.Binary}}_{{.Version}}_{{.Os}}-{{.Arch}}"
   replacements:
