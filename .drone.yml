@@ -9,13 +9,13 @@ steps:
     commands:
       - git fetch --tags
 
-  - name: test
-    image: golang
-    volumes:
-      - name: deps
-        path: /go
-    commands:
-      - go test -race -v ./... -cover
+#  - name: test
+#    image: golang
+#    volumes:
+#      - name: deps
+#        path: /go
+#    commands:
+#      - go test -race -v ./... -cover
 
   - name: release
     image: golang
