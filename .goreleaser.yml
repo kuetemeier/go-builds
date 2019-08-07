@@ -1,59 +1,106 @@
 project_name: test
+
 release:
+  # Repo in which the release will be created.
+  # Default is extracted from the origin remote URL.
+  # Note: it can only be one: either github or gitlab
   github:
     owner: kuetemeier
     name: test
+
+  # If set to true, will not auto-publish the release.
+  # Default is false.
   draft: true
+
+  # If set to auto, will mark the release as not ready for production
+  # in case there is an indicator for this in the tag e.g. v1.0.0-rc1
+  # If set to true, will mark the release as not ready for production.
+  # Default is false.
+  prerelease: auto
+
+  # You can change the name of the GitHub release.
+  # Default is `{{.Tag}}`
+  name_template: "{{.ProjectName}}-v{{.Version}} {{.Env.USER}}"
+
+  # You can disable this pipe in order to not upload any artifacts to
+  # GitHub.
+  # Defaults to false.
+  disable: true
+
 before:
   hooks:
     # you may remove this if you don't use vgo
     - go mod download
     # you may remove this if you don't need go generate
     - go generate ./...
-build:
-  binary: test
-  main: .
-  ldflags: -s -w -X github.com/kuetemeier/test/config.buildTime={{.Date}} -X github.com/kuetemeier/test/config.gitHash={{.Commit}} -X github.com/kuetemeier/test/config.version={{.Version}}
-  goos:
-    - darwin
-    - linux
-    - windows
-  goarch:
-    - amd64
-    - arm64
-  ignore:
-    - goos: openbsd
-      goarch: arm
-      goarm: 6
-  env:
-    - CGO_ENABLED=0
-archive:
-  name_template: "{{.Binary}}_{{.Version}}_{{.Os}}-{{.Arch}}"
-  replacements:
-    amd64: 64bit
-    386: 32bit
-    arm: ARM
-    arm64: ARM64
-    darwin: macOS
-    linux: Linux
-    windows: Windows
-    openbsd: OpenBSD
-    netbsd: NetBSD
-    freebsd: FreeBSD
-    dragonfly: DragonFlyBSD
-  format: tar.gz
-  format_overrides:
-    - goos: windows
-      format: zip
-  files:
-  - LICENSE
+builds:
+  -
+    binary: test
+    id: test
+    main: .
+    ldflags: -s -w -X github.com/kuetemeier/test/config.Buildtime={{.Date}} -X github.com/kuetemeier/test/config.FullCommit={{.FullCommit}} -X github.com/kuetemeier/test/config.ShortCommit={{.ShortCommit}} -X github.com/kuetemeier/test/config.Version={{.Version}}
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    goarm:
+      - 7 
+    ignore:
+      - goos: openbsd
+        goarch: arm
+        goarm: 6
+    env:
+      - CGO_ENABLED=0
+archives:
+  - id: test
+    name_template: "{{.Binary}}_{{.Version}}_{{.Os}}-{{.Arch}}"
+    replacements:
+      amd64: 64bit
+      386: 32bit
+      arm: ARM
+      arm64: ARM64
+      darwin: macOS
+      linux: Linux
+      windows: Windows
+      openbsd: OpenBSD
+      netbsd: NetBSD
+      freebsd: FreeBSD
+      dragonfly: DragonFlyBSD
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+      - goos: darwin
+        format: zip
+#    files:
+#    - LICENSE
 snapshot:
   name_template: SNAPSHOT-{{ .Commit }}
 checksum:
+  # You can change the name of the checksums file.
+  # Default is `{{ .ProjectName }}_{{ .Version }}_checksums.txt`.
   name_template: '{{ .ProjectName }}_{{ .Version }}_checksums.txt'
+
+  # Algorithm to be used.
+  # Accepted options are sha256, sha512, sha1, crc32, md5, sha224 and sha384.
+  # Default is sha256.
+  algorithm: sha256  
+
 changelog:
+  # set it to true if you wish to skip the changelog generation
+  skip: false
+  # could either be asc, desc or empty
+  # Default is empty
   sort: asc
   filters:
+    # commit messages matching the regexp listed here will be removed from
+    # the changelog
+    # Default is empty
     exclude:
-    - '^docs:'
-    - '^test:'
+      - '^docs:'
+      - '^test:'
+      - typo
+      - (?i)foo
