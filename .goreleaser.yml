@@ -25,7 +25,7 @@ release:
   # You can disable this pipe in order to not upload any artifacts to
   # GitHub.
   # Defaults to false.
-  disable: true
+  disable: false
 
 before:
   hooks:
