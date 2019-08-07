@@ -10,6 +10,4 @@ var (
 	FullCommit = "none"
 	// Buildtime is the RFC3339 timestamp, when this build was compiled, linked at build-time (@see goreleaser)
 	Buildtime = "unknown"
-	// GoVersion used to compile this binary
-	GoVersion = "unknown"
 )

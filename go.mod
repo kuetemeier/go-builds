@@ -1,3 +1,3 @@
-module github.com/kuetemeier/test
+module github.com/kuetemeier/go-builds
 
 go 1.12
