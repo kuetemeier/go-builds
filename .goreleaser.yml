@@ -13,7 +13,7 @@ before:
 build:
   binary: test
   main: .
-  ldflags: -s -w -X github.com/kuetemeier/test/main.buildtime={{.Date}} -X github.com/kuetemeier/test/main.commithash={{.Commit}} -X github.com/kuetemeier/test/main.version={{.Version}}
+  ldflags: -s -w -X github.com/kuetemeier/test/config.buildTime={{.Date}} -X github.com/kuetemeier/test/config.gitHash={{.Commit}} -X github.com/kuetemeier/test/config.version={{.Version}}
   goos:
     - darwin
     - linux

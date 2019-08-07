@@ -1,14 +1,12 @@
 // main.go
 package main
 
-var version = "unknown"
-var commithash = "unknown"
-var buildtime = "unknown"
+import "github.com/kuetemeier/test/config"
 
 func main() {
 	println("Ba dum, tss!")
 	println("")
-	println("This is version: " + version)
-	println("Commit Hash: " + commithash)
-	println("Timestamp:" + buildtime)
+	println("This is version: " + config.GetVersion())
+	println("Commit Hash: " + config.GetGitHash())
+	println("Build Time:" + config.GetBuildTime())
 }
