@@ -77,9 +77,9 @@ archives:
     format_overrides:
       - goos: windows
         format: zip
-      - goos: darwin
-        format: zip
-#    files:
+#      - goos: darwin
+#        format: zip
+    files:
 #    - LICENSE
 snapshot:
   name_template: SNAPSHOT-{{ .Commit }}
