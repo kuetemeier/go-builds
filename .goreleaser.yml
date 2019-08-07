@@ -1,5 +1,9 @@
 project_name: test
 
+env:
+  - GO111MODULE=on
+  - GOPROXY=https://proxy.golang.org
+
 release:
   # Repo in which the release will be created.
   # Default is extracted from the origin remote URL.
